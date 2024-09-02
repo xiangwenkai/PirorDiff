@@ -1,0 +1,57 @@
+[2024-08-30 08:40:42,377::evaluate::INFO] Load generated data done! sample_id[0:1] examples for evaluation.
+[2024-08-30 08:40:48,469::evaluate::INFO] Evaluate done! 75 samples in total.
+[2024-08-30 08:40:48,470::evaluate::INFO] mol_stable:	0.3333
+[2024-08-30 08:40:48,470::evaluate::INFO] atm_stable:	0.9222
+[2024-08-30 08:40:48,470::evaluate::INFO] recon_success:	0.9867
+[2024-08-30 08:40:48,470::evaluate::INFO] eval_success:	0.0000
+[2024-08-30 08:40:48,471::evaluate::INFO] complete:	0.9333
+[2024-08-30 08:40:48,471::evaluate::INFO] JS bond distances of complete mols: 
+[2024-08-30 08:40:48,471::evaluate::INFO] JSD_6-6|4:	None
+[2024-08-30 08:40:48,471::evaluate::INFO] JSD_6-6|1:	None
+[2024-08-30 08:40:48,471::evaluate::INFO] JSD_6-8|1:	None
+[2024-08-30 08:40:48,473::evaluate::INFO] JSD_6-7|1:	None
+[2024-08-30 08:40:48,473::evaluate::INFO] JSD_6-8|2:	None
+[2024-08-30 08:40:48,473::evaluate::INFO] JSD_6-6|2:	None
+[2024-08-30 08:40:48,473::evaluate::INFO] JSD_6-7|4:	None
+[2024-08-30 08:40:48,474::evaluate::INFO] JSD_6-7|2:	None
+[2024-08-30 08:40:48,477::evaluate::INFO] JSD_CC_2A:	nan
+[2024-08-30 08:40:48,478::evaluate::INFO] JSD_All_12A:	nan
+[2024-08-30 08:44:00,931::evaluate::INFO] Load generated data done! sample_id[0:1] examples for evaluation.
+[2024-08-30 08:44:05,996::evaluate::INFO] Evaluate done! 75 samples in total.
+[2024-09-02 13:50:12,072::evaluate::INFO] Load generated data done! sample_id[0:1] examples for evaluation.
+[2024-09-02 13:50:15,637::evaluate::INFO] Evaluate done! 75 samples in total.
+[2024-09-02 13:50:15,638::evaluate::INFO] mol_stable:	0.2533
+[2024-09-02 13:50:15,638::evaluate::INFO] atm_stable:	0.7341
+[2024-09-02 13:50:15,638::evaluate::INFO] recon_success:	0.9867
+[2024-09-02 13:50:15,639::evaluate::INFO] eval_success:	0.0000
+[2024-09-02 13:50:15,639::evaluate::INFO] complete:	0.6000
+[2024-09-02 13:50:15,639::evaluate::INFO] JS bond distances of complete mols: 
+[2024-09-02 13:50:15,639::evaluate::INFO] JSD_6-6|4:	None
+[2024-09-02 13:50:15,639::evaluate::INFO] JSD_6-6|1:	None
+[2024-09-02 13:50:15,640::evaluate::INFO] JSD_6-8|1:	None
+[2024-09-02 13:50:15,640::evaluate::INFO] JSD_6-7|1:	None
+[2024-09-02 13:50:15,640::evaluate::INFO] JSD_6-8|2:	None
+[2024-09-02 13:50:15,640::evaluate::INFO] JSD_6-6|2:	None
+[2024-09-02 13:50:15,640::evaluate::INFO] JSD_6-7|4:	None
+[2024-09-02 13:50:15,640::evaluate::INFO] JSD_6-7|2:	None
+[2024-09-02 13:50:15,644::evaluate::INFO] JSD_CC_2A:	nan
+[2024-09-02 13:50:15,644::evaluate::INFO] JSD_All_12A:	nan
+[2024-09-02 13:52:45,074::evaluate::INFO] Load generated data done! sample_id[0:1] examples for evaluation.
+[2024-09-02 13:52:49,090::evaluate::INFO] Evaluate done! 75 samples in total.
+[2024-09-02 13:52:49,090::evaluate::INFO] mol_stable:	0.2533
+[2024-09-02 13:52:49,090::evaluate::INFO] atm_stable:	0.7341
+[2024-09-02 13:52:49,091::evaluate::INFO] recon_success:	0.9867
+[2024-09-02 13:52:49,091::evaluate::INFO] eval_success:	0.0000
+[2024-09-02 13:52:49,091::evaluate::INFO] complete:	0.6000
+[2024-09-02 13:52:49,091::evaluate::INFO] JS bond distances of complete mols: 
+[2024-09-02 13:52:49,092::evaluate::INFO] JSD_6-6|4:	None
+[2024-09-02 13:52:49,092::evaluate::INFO] JSD_6-6|1:	None
+[2024-09-02 13:52:49,093::evaluate::INFO] JSD_6-8|1:	None
+[2024-09-02 13:52:49,093::evaluate::INFO] JSD_6-7|1:	None
+[2024-09-02 13:52:49,093::evaluate::INFO] JSD_6-8|2:	None
+[2024-09-02 13:52:49,093::evaluate::INFO] JSD_6-6|2:	None
+[2024-09-02 13:52:49,093::evaluate::INFO] JSD_6-7|4:	None
+[2024-09-02 13:52:49,094::evaluate::INFO] JSD_6-7|2:	None
+[2024-09-02 13:52:49,097::evaluate::INFO] JSD_CC_2A:	nan
+[2024-09-02 13:52:49,097::evaluate::INFO] JSD_All_12A:	nan
+[2024-09-02 13:54:05,694::evaluate::INFO] QED:   Mean: nan Median: nan
