@@ -38,7 +38,8 @@ def get_auroc(y_true, y_pred, feat_mode):
 
 
 if __name__ == '__main__':
-    root_dir = '/mnt/c/Users/xwk/PycharmProjects/IPDiff'
+    # root_dir = '/mnt/c/Users/xwk/PycharmProjects/IPDiff'
+    root_dir = '/home/wenkai/PirorDiff'
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--config', type=str, default=root_dir + '/configs/training.yml')
