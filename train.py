@@ -47,7 +47,7 @@ if __name__ == '__main__':
     parser.add_argument('--logdir', type=str, default=root_dir + '/logs')
     parser.add_argument('--tag', type=str, default='')
     parser.add_argument('--train_report_iter', type=int, default=200)
-    parser.add_argument('--ipnet', type=bool, default=False)
+    parser.add_argument('--ipnet', action="store_true")
     args = parser.parse_args()
 
     # Load configs
