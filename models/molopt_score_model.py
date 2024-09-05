@@ -466,7 +466,7 @@ class ScorePosNet3D(nn.Module):
         return loss_v
 
     def get_diffusion_loss(
-            self, net_cond, protein_pos, protein_v, batch_protein, ligand_pos, ligand_v, batch_ligand, time_step=None
+            self, protein_pos, protein_v, batch_protein, ligand_pos, ligand_v, batch_ligand, time_step=None, net_cond=None
     ):
         num_graphs = batch_protein.max().item() + 1
         protein_pos, ligand_pos, _ = center_pos(
@@ -474,9 +474,9 @@ class ScorePosNet3D(nn.Module):
 
         hbap_ligand = None
         hbap_protein = None
-        if self.model_mean_type == 'noise':
+        if self.model_mean_type == 'noise' or net_cond is None:
             pass
-        elif self.model_mean_type == 'C0':
+        elif self.model_mean_type == 'C0' and net_cond is not None:
             gt_protein_v = protein_v
             gt_protein_pos = protein_pos
             gt_ligand_v = ligand_v
@@ -497,20 +497,31 @@ class ScorePosNet3D(nn.Module):
             pt = torch.ones_like(time_step).float() / self.num_timesteps
         a = self.alphas_cumprod.index_select(0, time_step)
 
-        k_t = self.k_t.index_select(0, time_step)
+        if net_cond is not None:
+            k_t = self.k_t.index_select(0, time_step)
 
-        k_t_pos = k_t[batch_ligand].unsqueeze(-1)
+            k_t_pos = k_t[batch_ligand].unsqueeze(-1)
 
-        a_pos = a[batch_ligand].unsqueeze(-1)
-        pos_noise = torch.zeros_like(ligand_pos)
-        pos_noise.normal_()
+            a_pos = a[batch_ligand].unsqueeze(-1)
+            pos_noise = torch.zeros_like(ligand_pos)
+            pos_noise.normal_()
 
-        shift_cond_t = torch.cat([hbap_ligand, time_step[batch_ligand].unsqueeze(-1)], -1)
-        shift_cond_t = self.shift_t_mlp_pos(shift_cond_t)
-        ligand_pos_perturbed = a_pos.sqrt() * ligand_pos + (1.0 - a_pos).sqrt() * pos_noise + k_t_pos * shift_cond_t
-        log_ligand_v0 = index_to_log_onehot(ligand_v, self.num_classes)
-        ligand_v_perturbed, log_ligand_vt = self.q_v_sample(log_ligand_v0, time_step, batch_ligand)
-
+            shift_cond_t = torch.cat([hbap_ligand, time_step[batch_ligand].unsqueeze(-1)], -1)
+            shift_cond_t = self.shift_t_mlp_pos(shift_cond_t)
+            ligand_pos_perturbed = a_pos.sqrt() * ligand_pos + (1.0 - a_pos).sqrt() * pos_noise + k_t_pos * shift_cond_t
+            log_ligand_v0 = index_to_log_onehot(ligand_v, self.num_classes)
+            ligand_v_perturbed, log_ligand_vt = self.q_v_sample(log_ligand_v0, time_step, batch_ligand)
+        else:
+            # 2. perturb pos and v
+            a_pos = a[batch_ligand].unsqueeze(-1)  # (num_ligand_atoms, 1)
+            pos_noise = torch.zeros_like(ligand_pos)
+            pos_noise.normal_()
+            # Xt = a.sqrt() * X0 + (1-a).sqrt() * eps
+            ligand_pos_perturbed = a_pos.sqrt() * ligand_pos + (1.0 - a_pos).sqrt() * pos_noise  # pos_noise * std
+            # Vt = a * V0 + (1-a) / K
+            log_ligand_v0 = index_to_log_onehot(ligand_v, self.num_classes)
+            ligand_v_perturbed, log_ligand_vt = self.q_v_sample(log_ligand_v0, time_step, batch_ligand)
+        # 3. forward-pass NN, feed perturbed pos and v, output noise
         preds = self(
             protein_pos=protein_pos,
             protein_v=protein_v,

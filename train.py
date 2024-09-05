@@ -39,7 +39,7 @@ def get_auroc(y_true, y_pred, feat_mode):
 
 if __name__ == '__main__':
     # root_dir = '/mnt/c/Users/xwk/PycharmProjects/IPDiff'
-    root_dir = '/home/wenkai/PirorDiff'
+    root_dir = '/data2/xiangwenkai/PirorDiff'
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--config', type=str, default=root_dir + '/configs/training.yml')
@@ -47,6 +47,7 @@ if __name__ == '__main__':
     parser.add_argument('--logdir', type=str, default=root_dir + '/logs')
     parser.add_argument('--tag', type=str, default='')
     parser.add_argument('--train_report_iter', type=int, default=200)
+    parser.add_argument('--ipnet', type=bool, default=False)
     args = parser.parse_args()
 
     # Load configs
@@ -102,7 +103,10 @@ if __name__ == '__main__':
     # Model
     logger.info('Building model...')
 
-    net_cond = BAPNet(ckpt_path=config.net_cond.ckpt_path, hidden_nf=config.net_cond.hidden_dim).to(args.device)
+    if args.ipnet:
+        net_cond = BAPNet(ckpt_path=config.net_cond.ckpt_path, hidden_nf=config.net_cond.hidden_dim).to(args.device)
+    else:
+        net_cond = None
 
     model = ScorePosNet3D(
         # net_cond,
@@ -128,14 +132,15 @@ if __name__ == '__main__':
             gt_protein_pos = batch.protein_pos + protein_noise
 
             results = model.get_diffusion_loss(
-                net_cond=net_cond,
                 protein_pos=gt_protein_pos,
                 protein_v=batch.protein_atom_feature.float(),
                 batch_protein=batch.protein_element_batch,
 
                 ligand_pos=batch.ligand_pos,
                 ligand_v=batch.ligand_atom_feature_full,
-                batch_ligand=batch.ligand_element_batch
+                batch_ligand=batch.ligand_element_batch,
+
+                net_cond=net_cond,
             )
             loss, loss_pos, loss_v = results['loss'], results['loss_pos'], results['loss_v']
             loss = loss / config.train.n_acc_batch
