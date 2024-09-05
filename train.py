@@ -115,6 +115,10 @@ if __name__ == '__main__':
         ligand_atom_feature_dim=ligand_featurizer.feature_dim
     ).to(args.device)
 
+    ckpt = torch.load('pretrained_models/pretrained_ipdiff.pt', map_location=args.device)
+    model.load_state_dict(ckpt['model'])
+    print("resume!!!!! ***pretrained_models/pretrained_ipdiff.pt***")
+
     print(f'protein feature dim: {protein_featurizer.feature_dim} ligand feature dim: {ligand_featurizer.feature_dim}')
     logger.info(f'# trainable parameters: {misc.count_parameters(model) / 1e6:.4f} M')
 

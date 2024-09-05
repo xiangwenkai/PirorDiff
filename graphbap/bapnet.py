@@ -206,13 +206,15 @@ class BAPNet(nn.Module):
         complexes_emb = torch.cat([complexes_type_emb, complexes_id_emb], dim=-1)
         complexes_emb = self.embed_fusion(complexes_emb)
 
-        complexes_edge_index = get_edges(mask=complexes_mask, x=complexes_coords, edge_cutoff=4).cpu()
+        # complexes_edge_index = get_edges(mask=complexes_mask, x=complexes_coords, edge_cutoff=4).cpu()
+        complexes_edge_index = get_edges(mask=complexes_mask, x=complexes_coords).cpu()
         complexes_edge_index = torch.LongTensor(complexes_edge_index).to(device)
 
         ligand_edge_index = get_edges(mask=lig_mask).cpu()
         ligand_edge_index = torch.LongTensor(ligand_edge_index).to(device)
 
-        pocket_edge_index = get_edges(mask=pocket_mask, x=pocket_coords, edge_cutoff=4).cpu()
+        # pocket_edge_index = get_edges(mask=pocket_mask, x=pocket_coords, edge_cutoff=4).cpu()
+        pocket_edge_index = get_edges(mask=pocket_mask, x=pocket_coords).cpu()
         pocket_edge_index = torch.LongTensor(pocket_edge_index).to(device)
 
         complexes_emb_ = complexes_emb.clone()
