@@ -497,7 +497,7 @@ class ScorePosNet3D(nn.Module):
             pt = torch.ones_like(time_step).float() / self.num_timesteps
         a = self.alphas_cumprod.index_select(0, time_step)
 
-        if net_cond is not None:
+        if self.model_mean_type == 'C0' and net_cond is not None:
             k_t = self.k_t.index_select(0, time_step)
 
             k_t_pos = k_t[batch_ligand].unsqueeze(-1)
